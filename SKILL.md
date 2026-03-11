@@ -4,8 +4,8 @@ description: >
   Take the 16personalities.com MBTI personality test as an AI character or persona.
   Automates browser via Playwright CDP — answers 60 questions based on character personality,
   then extracts the result (MBTI type + trait percentages).
-  Use when: "/mbti", "/mbti-test", "MBTI", "take MBTI", "personality test", "16personalities",
-  "MBTI 검사", "성격 검사", "take personality test as character"
+  Use when: "/mbti", "/mbti-test", "MBTI", "take MBTI", "personality test",
+  "16personalities", "take personality test as character"
 ---
 
 # MBTI Test Automation
@@ -17,18 +17,14 @@ Take the 16personalities.com MBTI test as any character or persona using Playwri
 - `@playwright/test` installed (check with `npm ls @playwright/test`)
 - Google Chrome installed
 
-## Skill Root
-
-`~/.claude/skills/mbti-test/`
-
 ## Flow
 
 ### Step 1: Define Character Personality
 
 Determine who is taking the test. Sources:
 - User-provided character description
-- Character config file (e.g., influgent `characters/{name}/config.json`)
-- AI agent's own personality (from IDENTITY.md, SOUL.md, etc.)
+- Character config file (JSON with personality traits)
+- AI agent's own personality definition
 
 Identify the target MBTI dimensions:
 - **I/E**: Introverted vs Extraverted
@@ -39,9 +35,11 @@ Identify the target MBTI dimensions:
 
 ### Step 2: Launch Browser
 
+Run from the skill's install directory:
+
 ```bash
-node ~/.claude/skills/mbti-test/scripts/mbti.mjs start          # headless
-node ~/.claude/skills/mbti-test/scripts/mbti.mjs start --headed  # with GUI
+node scripts/mbti.mjs start          # headless
+node scripts/mbti.mjs start --headed  # with GUI
 ```
 
 ### Step 3: Build Answer Mapping
@@ -67,7 +65,7 @@ Add `__gender` key with "Male", "Female", or "Other" for the avatar selection.
 ### Step 4: Run Test
 
 ```bash
-node ~/.claude/skills/mbti-test/scripts/mbti.mjs answer /tmp/mbti-answers.json
+node scripts/mbti.mjs answer /tmp/mbti-answers.json
 ```
 
 Output: JSON with MBTI type, trait percentages, and description. Screenshot at `/tmp/mbti-result.png`.
@@ -81,17 +79,17 @@ Output: JSON with MBTI type, trait percentages, and description. Screenshot at `
 ### Step 6: Cleanup
 
 ```bash
-node ~/.claude/skills/mbti-test/scripts/mbti.mjs stop
+node scripts/mbti.mjs stop
 ```
 
 ## Utility Commands
 
 ```bash
 # Extract all 60 questions (useful if questions change)
-node ~/.claude/skills/mbti-test/scripts/mbti.mjs extract
+node scripts/mbti.mjs extract
 
 # Get result from current page (if browser still open on result page)
-node ~/.claude/skills/mbti-test/scripts/mbti.mjs result
+node scripts/mbti.mjs result
 ```
 
 ## Environment
